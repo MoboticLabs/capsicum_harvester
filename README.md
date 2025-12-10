@@ -72,15 +72,15 @@ If you install new packages (like `sudo apt install ros-humble-gazebo...`) insid
 
 ## Launch Node:
 
-To launch a node use for example full_system.launch.py you can use:
+To launch a node, for example, full_system.launch.py, you can use:
 
 ```bash
 ros2 launch robot_control full_system.launch.py
 ```
 
-## Manual IK Cammand
+## Manual IK Command
 
-If you want to give the IK cammand manually you can give it like this:
+If you want to give the IK command manually, you can do it by using another terminal and giving coordinates like this:
 
 ```bash
 ros2 topic pub /target_pose geometry_msgs/msg/PoseStamped "{
@@ -94,7 +94,7 @@ ros2 topic pub /target_pose geometry_msgs/msg/PoseStamped "{
 
 ## Might Be Useful
 
-**If you change the package.xml then make sure to run the following (first run the last the last two line if still not working run it full)**
+**If you change the package.xml, then make sure to run the following (first run the last two lines if still not working, run the full code)**
 
 ```bash
 apt update
@@ -104,7 +104,7 @@ rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-**If you added a new launch file don't forget to edit the CMakeList.txt file**
+**If you added a new launch file, don't forget to edit the CMakeList.txt file**
 
 Current CMakeList.txt of controls: 
 
@@ -114,9 +114,9 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 ```
-**Always make sure to make the scrit executable and then only build**
+**Always make sure to make the script executable and then only build**
 
-For docker the execution code need the container name first like this:
+For Docker, the execution code needs to be like this:
 
 ```bash
 chmod +x /root/ros2_ws/src/capsicum_harvester/robot_control/scripts/detection_node.py
