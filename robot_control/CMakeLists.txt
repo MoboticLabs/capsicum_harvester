@@ -17,7 +17,7 @@ install(
 )
 
 install(
-  PROGRAMS scripts/ik.py
+  PROGRAMS scripts/ik.py scripts/detection_node.py scripts/serial_bridge_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

@@ -56,51 +56,8 @@ source install/setup.bash
 To open RViz (ensure you are using Remote Desktop, not plain SSH):
 
 ```bash
-rviz2
+ros2 launch robot_description rviz.launch.py
 ```
-
------
-
-## ⚡ Pro Tip: Create a Shortcut (Alias)
-
-Typing that long docker command sucks. Make a shortcut so you only have to type `caprobo`.
-
-**1. Open your bash configuration on the Pi (Host):**
-
-```bash
-nano ~/.bashrc
-```
-
-**2. Scroll to the bottom and paste this:**
-
-```bash
-alias caprobo='xhost +local:root && docker run -it --privileged --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v /dev:/dev -v ~/ros2_ws:/root/ros2_ws caprobo'
-```
-
-**3. Save and Apply:**
-
-  * Press `Ctrl+O`, `Enter` to save.
-  * Press `Ctrl+X` to exit.
-  * Run `source ~/.bashrc` to activate it.
-
-**4. Now just type:**
-
-```bash
-caprobo
-```
-
------
-
-## 🆘 Troubleshooting
-
-| Issue | Solution |
-| :--- | :--- |
-| **`rviz2: command not found`** | You forgot to `source /opt/ros/humble/setup.bash` |
-| **`unable to open display ""`** | You are in a text-only SSH. Connect via **Remote Desktop**. |
-| **`exec format error`** | You downloaded an Intel (AMD64) image. Use the `caprobo` image. |
-| **Code changes not showing?** | Run `colcon build` and `source install/setup.bash`. |
-
------
 
 ## 📦 Container Maintenance
 
@@ -112,3 +69,55 @@ If you install new packages (like `sudo apt install ros-humble-gazebo...`) insid
 2.  Open a **new** terminal on the Pi.
 3.  Find the ID: `docker ps`
 4.  Save it: `docker commit <CONTAINER_ID> caprobo`
+
+## Launch Node:
+
+To launch a node use for example full_system.launch.py you can use:
+
+```bash
+ros2 launch robot_control full_system.launch.py
+```
+
+## Manual IK Cammand
+
+If you want to give the IK cammand manually you can give it like this:
+
+```bash
+ros2 topic pub /target_pose geometry_msgs/msg/PoseStamped "{
+  header: {frame_id: 'link1'},
+  pose: {
+    position: {x: 0.00, y: 0.12, z: 0.45},
+    orientation: {x: 0, y: 0, z: 0, w: 1}
+  }
+}" --once
+```
+
+## Might Be Useful
+
+**If you change the package.xml then make sure to run the following (first run the last the last two line if still not working run it full)**
+
+```bash
+apt update
+rosdep update
+rosdep install --from-paths src --ignore-src -r -yapt update
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+**If you added a new launch file don't forget to edit the CMakeList.txt file**
+
+Current CMakeList.txt of controls: 
+
+```bash
+install(
+  PROGRAMS scripts/ik.py scripts/detection_node.py scripts/serial_bridge_node.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+```
+**Always make sure to make the scrit executable and then only build**
+
+For docker the execution code need the container name first like this:
+
+```bash
+chmod +x /root/ros2_ws/src/capsicum_harvester/robot_control/scripts/detection_node.py
+```
