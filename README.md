@@ -121,3 +121,15 @@ For Docker, the execution code needs to be like this:
 ```bash
 chmod +x /root/ros2_ws/src/capsicum_harvester/robot_control/scripts/detection_node.py
 ```
+
+**For checking which serial port to use for the launch file, use this:**
+
+```bash
+ls /dev/ttyACM* /dev/ttyUSB*
+```
+
+and to give read and write rights, use this
+
+```bash
+sudo chmod 666 /dev/ttyACM0
+```
