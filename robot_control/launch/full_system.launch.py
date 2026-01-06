@@ -25,7 +25,7 @@ def generate_launch_description():
             parameters=[
                 {'serial_port': '/dev/ttyACM0'},
                 {'baud_rate': 115200},
-                {'steps_per_rev': 1600}
+                {'steps_per_rev': 400}
             ]
         ),
         

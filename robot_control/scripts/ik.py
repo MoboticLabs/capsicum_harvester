@@ -232,6 +232,8 @@ class InverseKinematics(Node):
             if i % 20 == 0:
                 self.get_logger().info(f"Iter {i}: ||w_err||={np.linalg.norm(w_err):.4f}, ||v_err||={np.linalg.norm(v_err):.4f}")
 
+        self.publish_positions(theta)
+
         self.get_logger().warn("IK failed to converge.")
         #self.err_log = np.array(self.err_log)
         #np.save('/tmp/ik_err_log.npy', self.err_log)
